@@ -102,7 +102,14 @@ def get_tf_idf(data_path):
             sum_square)) for index, tf_idf_value in word_tf_idfs]
         sparse_rep = ' '.join(words_tf_idfs_normalized)
         data_tf_idf.append((label, doc_id, sparse_rep))
-    with open("../datasets/20news-bydate/tf_idf.txt", "w") as p:
+    filename = "tf_idf.txt"
+    if "train" in data_path:
+        filename = f"train_{filename}"
+    elif "test" in data_path:
+        filename = f'test_{filename}'
+    else:
+        filename = f'full_{filename}'
+    with open(f"../datasets/20news-bydate/{filename}", "w") as p:
         p.write('\n'.join([str(label) + delimiter + str(doc_id) + delimiter +
                            sparse_rep for label, doc_id, sparse_rep in data_tf_idf]))
 
@@ -111,3 +118,5 @@ if __name__ == '__main__':
     gather_20newsgroups_data()
     generate_vocabulary("../datasets/20news-bydate/20news-full-processed.txt")
     get_tf_idf("../datasets/20news-bydate/20news-full-processed.txt")
+    get_tf_idf("../datasets/20news-bydate/20news-train-processed.txt")
+    get_tf_idf("../datasets/20news-bydate/20news-test-processed.txt")
