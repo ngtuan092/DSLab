@@ -185,4 +185,4 @@ if __name__ == '__main__':
     predicted_labels, loss = mlp.build_graph()
     trainer_op = mlp.trainer(loss=loss, learning_rate=0.1)
     train()
-    test(12)
+    test(44)
